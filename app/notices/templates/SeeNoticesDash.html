@@ -1,0 +1,46 @@
+{% extends './base2.html' %}
+{% import "_macros.html" as macros %}
+
+{% block main2 %}
+
+<main class="dashboard__main dashNotice">
+    <div class="dashNotices__container">
+        <div class="dashNotices__links">
+            <a href="{{ url_for('notices.addNotice') }}">Nueva Publicacion</a>
+            <a href="{{ url_for('notices.seeNotice') }}">Publicaciones Anteriores</a>
+        </div>
+        {% from "_macros.html" import render_fieldError %}
+            
+        <div class="dashNotices__posts">
+            {% for notice in items%}
+            <div class="dashNotices__post">
+                <div class="dashNotices__postBox">
+                    {% if notice.img %}
+                        <img src="{{ url_for('notices.get_img', filename=notice.img ) }}" alt="">
+                    {% else %}
+                        <img src="" alt="">
+                    {% endif %}
+                    <div class="content">
+                        <h3>{{ notice.title }}</h3>
+                        <p>{{ notice.body }}</p>
+                    </div>
+                </div>
+                <div class="dashNotices__buttons">
+                    <a href="{{ url_for('notices.editNotice',id=notice.id) }}" class="edit">Editar</a>
+                    <a href="{{ url_for('notices.deleteNotice',id=notice.id) }}" data-Atributo="{{notice.id}}" class="delete" id="btnBlogDelete">Eliminar</a>
+                </div>
+            </div>
+            {% endfor %}
+            <div class="pagination">
+                {{ macros.pagination_widget(pagination, 'notices.seeNotice') }}
+            </div>
+        </div>
+    </div>
+</main>
+
+{% endblock %}
+    
+
+{% block script2 %}
+<script src="/static/js/alertBtnBlog.js"></script>
+{% endblock %}

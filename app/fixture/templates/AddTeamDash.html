@@ -1,0 +1,57 @@
+{% extends './base2.html' %}
+
+{% block main2 %}
+<main class="dashboard__main dashFixture">
+    <div class="dashFixture__container">
+        <div class="dashFixture__links">
+            <a href="{{ url_for('fixture.addTeam') }}" class="dashFixture__link">Equipos</a>
+            <a href="{{ url_for('fixture.versus') }}" class="dashFixture__link">Calendario</a>
+            <a href="{{ url_for('fixture.positions') }}" class="dashFixture__link">Tabla de posiciones</a>
+        </div>
+        <div class="dashFixture__teamsC">
+            <div class="dashFixture__addTeam ">
+                {% if not edit %}
+                <h3>Agregar Equipo</h3>
+                {% else %}
+                <h3>Actualizar datos de Equipo</h3>
+                {% endif %}
+                <form method="POST" enctype="multipart/form-data" novalidate class="dashFixture__addTeamForm">
+                    {{ form.hidden_tag() }}
+                    <div>
+                        {{ form.team.label(class="team__label") }}
+                        {{ form.team(class="team__input") }}
+                    </div>
+                    <div>
+                        {{ form.img_logo.label(class="team__label") }}
+                        {{ form.img_logo(class="team__input") }}
+                    </div>
+                    <div>
+                        {{ form.submit(class="team__button")|safe }}
+                    </div>
+                </form>
+            </div>
+            {% if not edit %}
+            <div class="dashFixture__teams ">
+                <h3>Equipos</h3>
+                <div class="dashFixture__listTeams">
+                    {% for equipo in equipos %}
+                    <div class="dashFixture__team">
+                        <img src="{{ url_for('fixture.get_file', filename=equipo.logo ) }}" alt="">
+                        <span class="team">{{ equipo.teamName }}</span>
+                        <a href="{{ url_for('fixture.updateTeam', id=equipo.id ) }}" class="button" id="btnTeamUpdate" data-Atributo="{{equipo.id}}">Editar</a>
+                        <a href="{{ url_for('fixture.deleteTeam', id=equipo.id ) }}" class="button button--delete" id="btnBlogDelete" data-Atributo="{{equipo.id}}">Eliminar</a>
+                    </div>          
+                    {% endfor%}
+                </div>
+            </div>
+            {% endif %}
+            
+        </div>
+    </div>
+</main>
+{% endblock %}
+    
+
+{% block script2 %}
+<script src="/static/js/alertBtnBlog.js"></script>
+{% endblock %}

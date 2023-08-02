@@ -1,0 +1,46 @@
+{% extends './base2.html' %}
+{% import "_macros.html" as macros %}
+
+{% block main2 %}
+
+<main class="dashboard__main dashBlog">
+    <div class="dashBlog__container">
+        <div class="dashBlog__links">
+            <a href="{{ url_for('blog.addBlog') }}">Nueva Publicacion</a>
+            <a href="{{ url_for('blog.seeBlog') }}">Publicaciones Anteriores</a>
+        </div>
+        {% from "_macros.html" import render_fieldError %}
+            
+        <div class="dashBlog__posts">
+            {% for blog in items%}
+            <div class="dashBlog__post">
+                <div class="dashBlog__postBox">
+                    {% if blog.img_blog %}
+                        <img src="{{ url_for('blog.get_imgBlog', filename=blog.img_blog ) }}" alt="">
+                    {% else %}
+                        <img src="" alt="">
+                    {% endif %}
+                    <div class="content">
+                        <h3>{{ blog.title }}</h3>
+                        <p>{{ blog.body }}</p>
+                    </div>
+                </div>
+                <div class="dashBlog__buttons">
+                    <a href="{{ url_for('blog.editBlog',id=blog.id) }}" class="edit">Editar</a>
+                    <a href="{{ url_for('blog.deleteBlog',id=blog.id) }}" data-Atributo="{{blog.id}}" class="delete" id="btnBlogDelete">Eliminar</a>
+                </div>
+            </div>
+            {% endfor %}
+            <div class="pagination">
+                {{ macros.pagination_widget(pagination, 'blog.seeBlog') }}
+            </div>
+        </div>
+    </div>
+</main>
+
+{% endblock %}
+    
+
+{% block script2 %}
+<script src="/static/js/alertBtnBlog.js"></script>
+{% endblock %}

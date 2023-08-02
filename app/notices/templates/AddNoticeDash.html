@@ -1,0 +1,40 @@
+{% extends './base2.html' %}
+{% import "_macros.html" as macros %}
+
+{% block main2 %}
+
+<main class="dashboard__main dashNotices">
+    <div class="dashNotices__container">
+        <div class="dashNotices__links">
+            <a href="{{ url_for('notices.addNotice') }}" class="">Nueva Publicacion</a>
+            <a href="{{ url_for('notices.seeNotice') }}">Publicaciones Anteriores</a>
+        </div>
+        {% from "_macros.html" import render_fieldError %}
+            
+        <form method="POST" enctype="multipart/form-data" novalidate class="dashBlog__form">
+            {{ form.hidden_tag() }}
+            <div class="dashNotices__title">
+                {{ form.title.label() }}
+                {{ form.title(class='input') }}
+                {{ render_fieldError(form.title) }}
+            </div>
+            <div class="dashNotices__editor">
+                {{ form.img() }}
+                {{ render_fieldError(form.img) }}
+                {{ form.submit(class='button')|safe }}
+            </div>
+            <div class="dashNotices__content">
+                {{ form.body.label() }}
+                {{ form.body() }}
+                {{ render_fieldError(form.body) }}
+            </div>
+        </form>
+    </div>
+</main>
+
+{% endblock %}
+    
+
+{% block script2 %}
+
+{% endblock %}

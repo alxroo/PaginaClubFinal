@@ -1,0 +1,45 @@
+{% extends './base.html' %}
+{% import "_macros.html" as macros %}
+
+{% block main %}
+<main>
+    <section class="noticesPage">
+        <div class="noticesPage__container">
+            {% for notice in notices %}
+            <article class="noticesPage__article">
+                <h2 class="article__title">{{ notice.title }}</h2>
+                <div class="article__date"><span>Fecha de publicacion: </span>{{ notice.timestamp.strftime('%B %d %Y') }}</div>
+                <div class="article__content">
+                    <picture class="article__img">
+                        {% if notice.img %}
+                        <img src="{{ url_for('notices.get_img', filename=notice.img ) }}" alt="">
+                        {% else %}
+                        <img src="" alt="">
+                        {% endif %}
+                        
+                    </picture>
+                    <div class="article__texts">
+                        <p class="article__text">{{ notice.body }}</p>
+
+                    </div>
+                    <div class="article__link">
+                        <button class="btn1"></button>
+                    </div>
+                </div>
+            </article>
+            {% endfor %}
+
+            <div class="pagination noticesPage__pagination">
+                {{ macros.pagination_widget(pagination, 'main.noticias') }}
+            </div>
+        </div>
+        
+    </section>
+
+</main>
+{% endblock %}
+    
+
+{% block script %}
+    <script src="/static/js/btnMore.js"></script>
+{% endblock %}

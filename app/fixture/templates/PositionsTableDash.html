@@ -1,0 +1,46 @@
+{% extends './base2.html' %}
+
+{% block main2 %}
+<main class="dashboard__main dashFixture">
+    <div class="dashFixture__container">
+        <div class="dashFixture__links">
+            <a href="{{ url_for('fixture.addTeam') }}" class="dashFixture__link">Equipos</a>
+            <a href="{{ url_for('fixture.versus') }}" class="dashFixture__link">Calendario</a>
+            <a href="{{ url_for('fixture.positions') }}" class="dashFixture__link active">Tabla de posiciones</a>
+        </div>
+        <div class="dashFixture__positions">
+            <h3>Equipos</h3>
+            <div class="dashFixture__listPositions">
+                <div class="dashFixture__headPostions">
+                    <span >Pos</span>
+                    <span class="team">Equipo</span>
+                    <span>PJ</span>
+                    <span>PG</span>
+                    <span>PE</span>
+                    <span>PP</span>
+                    <span>DG</span>
+                    <span>Puntos</span>
+                </div>
+                {% for posicion in tabla %}
+                <div class="dashFixture__headPostions">
+                    <span>{{loop.index}}</span>
+                    <span class="team">{{ posicion.teamName }}</span>
+                    <span>{{ posicion.p_jugados }}</span>
+                    <span>{{ posicion.p_ganado }}</span>
+                    <span>{{ posicion.p_empatado }}</span>
+                    <span>{{ posicion.p_perdido}}</span>
+                    <span>{{ posicion.df }}</span>
+                    <span>{{ posicion.puntos }}</span>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+        
+    </div>
+</main>
+{% endblock %}
+    
+
+{% block script2 %}
+
+{% endblock %}

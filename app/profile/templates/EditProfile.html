@@ -1,0 +1,39 @@
+{% extends './base2.html' %}
+
+{% block main2 %}
+<main class="dashboard__main dashprofile">
+    <!-- <h1>Perfil</h1> -->
+    <div class="dashprofile__container">
+        <form class="dashprofile__inputs" method="POST" enctype="multipart/form-data" novalidate>
+            {{ form.hidden_tag() }}
+            <div class="dashprofile__input">
+                {{ form.userName.label() }}
+                {{ form.userName(class="input")}}
+            </div>
+            <div class="dashprofile__input">
+                {{ form.name.label() }}
+                {{ form.name(class="input")}}
+            </div>
+            <div class="dashprofile__input">
+                {{ form.email.label() }}
+                {{ form.email(class="input")}}
+            </div>
+            <div class="dashprofile__input">
+                {{ form.img.label(class="label__img") }}
+                {{ form.img(class="input__img")}}
+            </div>
+            <div class="dashprofile__buttons">
+                {{ form.submit(class="dashprofile__btn")|safe }}
+                <a href="{{ url_for('profile.profileDash') }}" class="dashprofile__btn cancel">Cancelar</a>
+            </div>
+        </form>
+    </div>
+
+    
+</main>
+{% endblock %}
+    
+
+{% block script2 %}
+
+{% endblock %}

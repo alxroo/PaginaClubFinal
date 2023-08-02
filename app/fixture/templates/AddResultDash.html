@@ -1,0 +1,41 @@
+{% extends './base2.html' %}
+
+{% block main2 %}
+<main class="dashboard__main dashFixture">
+    <div class="dashFixture__addResult">
+        <div class="addResult__container">
+            <h3 class="addResult__title">Agregar Resultado</h3>
+            <div>
+                <form method="POST" novalidate class="addResult__form">
+                    <div class="teamsUpd">
+                        <div class="local">
+                            <span>{{ fix.Local.teamName}}</span>
+                            <input type="text" name="golA" placeholder="Goles" value={{ fix.golLocal }}>
+                        </div>
+                        <strong class="vs"> VS </strong>
+                        <div class="visita">
+                            <span>{{ fix.Visita.teamName}}</span>
+                            <input type="text" name="golB" placeholder="Goles" value={{ fix.golVisita }}>
+                        </div>
+                    </div>
+                    <div class="buttons">
+                        <button type="submit" class="btnVersus">Guardar</button>
+                        {% if fix.estado == "cancelado" %}
+                        <a href="{{ url_for('fixture.cancelfix',id=fix.id) }}" class="cancel">Deshacer</a>
+                        {% else %}
+                        <a href="{{ url_for('fixture.cancelfix',id=fix.id) }}" class="cancel">Cancelado</a>
+                        {% endif %}
+                    </div>
+                    
+                </form>
+            </div>
+        </div>
+    </div>
+</main>
+
+{% endblock %}
+    
+
+{% block script2 %}
+
+{% endblock %}

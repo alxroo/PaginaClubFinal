@@ -1,0 +1,112 @@
+{% extends './base2.html' %}
+
+{% block main2 %}
+<main class="dashboard__main dashFixture">
+    <div class="dashFixture__container">
+        <div class="dashFixture__links">
+            <a href="{{ url_for('fixture.addTeam') }}" class="dashFixture__link">Equipos</a>
+            <a href="{{ url_for('fixture.versus') }}" class="dashFixture__link">Calendario</a>
+            <a href="{{ url_for('fixture.positions') }}" class="dashFixture__link">Tabla de posiciones</a>
+        </div>
+        <div class="dashFixture__calendar active" id="pestañaFix">
+            <div class="dashFixture__formFixture">
+                <h3>Registrar Fixture</h3>
+                <form class="dashFixture__form" method="POST" novalidate>
+                    <div class="row1">
+                        <select name="equipoLocal" id="">
+                            {% for equipo in equipos %}
+                            <option value={{equipo.id}}>{{equipo.teamName}}</option>
+                            {% endfor %}
+                        </select>
+                        <span>VS</span>
+                        <select name="equipoVisita" id="">
+                            {% for equipo in equipos %}
+                            <option value={{equipo.id}}>{{equipo.teamName}}</option>
+                            {% endfor %}
+                        </select>
+
+                    </div>
+                    <div class="row2">
+                        <input type="text" placeholder="Lugar" name="lugar">
+                    </div>
+                    <div class="row3">
+                        <input type="date" placeholder="Fecha" name="fecha">
+                        <input type="time" value="13:00" name="hora">
+                        <button type="submit">Guardar</button>
+                    </div>
+                </form>
+            </div>
+
+            <div class="dashFixture__fixtures">
+                <div class="dashFixture__last">
+                    <h3>Partidos Finalizados</h3>
+                    <div class="dashFixture__lastContainer">
+                        {% for versus in partidos %}
+                            {% if datos[loop.index-1] < 0 %}
+                            <div class="dashFixture__item">
+                                <div class="dashFixture__box">
+                                    <span class="team team--local">{{ versus.Local.teamName }}</span>
+                                    <img src="{{ url_for('fixture.get_file', filename=versus.Local.logo ) }}" alt="" class="logo">
+                                    <div class="result">
+                                        <span>{{ versus.golLocal }}</span><span>-</span><span>{{ versus.golVisita }}</span>
+                                    </div>
+                                    <img src="{{ url_for('fixture.get_file', filename=versus.Visita.logo ) }}" alt="" class="logo">
+                                    <span class="team team--visita">{{ versus.Visita.teamName }}</span>
+                                </div>
+                                <div class="dashFixture__row2">
+                                    <div class="dashFixture__date">
+                                        <span>Fecha y hora: {{ versus.fecha_hora }}</span>
+                                        <span>Lugar: {{ versus.lugar }}</span>
+                                    </div>
+                                    <div class="dashFixture__buttons">
+                                        <a href="{{ url_for('fixture.add_result',id=versus.id) }}" class="button">Editar</a>
+                                        <a href="{{ url_for('fixture.deleteVersus',id=versus.id) }}" data-Atributo="{{versus.id}}" id="btnBlogDelete" class="button button--delete">Eliminar</a>
+                                        {% if versus.estado == "cancelado" %}
+                                        <span style="color:red;">Cancelado</span>
+                                        {% endif %}
+                                    </div>
+                                </div>
+                            </div>
+                            {% endif %}
+                        {% endfor %}
+                    </div>
+                </div>
+
+                <div class="dashFixture__next">
+                    <h3>Partidos Siguientes</h3>
+                    <div class="dashFixture__lastContainer">
+                        {% for versus in partidos %}
+                            {% if datos[loop.index-1] >= 0 %}
+                            <div class="dashFixture__item">
+                                <div class="dashFixture__box">
+                                    <span class="team team--local">{{ versus.Local.teamName }}</span>
+                                    <img src="{{ url_for('fixture.get_file', filename=versus.Local.logo ) }}" alt="" class="logo">
+                                    <span class="score">VS</span>
+                                    <img src="{{ url_for('fixture.get_file', filename=versus.Visita.logo ) }}" alt="" class="logo">
+                                    <span class="team team--visita">{{ versus.Visita.teamName }}</span>
+                                </div>
+                                <div class="dashFixture__row2">
+                                    <div class="dashFixture__date">
+                                        <span>Fecha y hora: {{ versus.fecha_hora }}</span>
+                                        <span>Lugar: {{ versus.lugar }}</span>
+                                    </div>
+                                    <div class="dashFixture__buttons">
+                                        <!-- <a href="{{ url_for('fixture.add_result',id=versus.id) }}" class="button">Editar</a> -->
+                                        <a href="{{ url_for('fixture.deleteVersus',id=versus.id) }}" data-Atributo="{{versus.id}}" id="btnBlogDelete" class="button button--delete">Eliminar</a>
+                                    </div>
+                                </div>
+                            </div>
+                            {% endif %}
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+{% endblock %}
+    
+
+{% block script2 %}
+<script src="/static/js/alertBtnBlog.js"></script>
+{% endblock %}

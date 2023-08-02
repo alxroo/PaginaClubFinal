@@ -1,0 +1,173 @@
+{% extends './base.html' %}
+
+{% block main %}
+<main>
+    <section class="fixtur" id="fixture_id" name="fixture_id">
+        <div class="fixtur__container">
+            <h2 class="fixtur__title">Fixture</h2>
+            <div class="fixtur__table">
+                {% for versus in partidos %}
+                {% if versus.estado == "pendiente" %}
+                <div class="fixtur__versus">
+                    <div class="fixtur__date">
+                        <p>Fecha: <span>{{ versus.fecha_hora.strftime('%B %d %Y - %H:%M') }}</span></p>
+                        <p>Hora: <span>Lorem</span></p>
+                    </div>
+                    <div class="fixtur__teams">
+                        <div class="fixtur__teamA">
+                            <p>{{ versus.Local.teamName }}</p>
+                            <img src="{{ url_for('fixture.get_file', filename=versus.Local.logo ) }}" alt="">
+                        </div>
+                        <div class="fixtur__vs">
+                            <span>VS</span>
+                        </div>
+                        <div class="fixtur__teamB">
+                            <img src="{{ url_for('fixture.get_file', filename=versus.Visita.logo ) }}" alt="">
+                            <p>{{ versus.Visita.teamName }}</p>
+                        </div>
+                    </div>
+                    <div class="fixtur__place">
+                        <p>Lugar: <span>{{ versus.lugar }}</span></p>
+                    </div>
+                </div>
+                {% endif %}
+                {% endfor %}
+                <!-- <div class="fixtur__versus">
+                    <div class="fixtur__date">
+                        <p>Fecha: <span>Lorem Ipsum</span></p>
+                        <p>Hora: <span>Lorem</span></p>
+                    </div>
+                    <div class="fixtur__teams">
+                        <div class="fixtur__teamA">
+                            <p>Lorem ipsum dolor sit amet consectetur</p>
+                            <img src="/src/assets/imgs/logo2.jpg" alt="">
+                        </div>
+                        <div class="fixtur__vs">
+                            <span>VS</span>
+                        </div>
+                        <div class="fixtur__teamB">
+                            <img src="/src/assets/imgs/logo4.jpg" alt="">
+                            <p>Lorem ipsum dolor sit amet consectetu</p>
+                        </div>
+                    </div>
+                    <div class="fixtur__place">
+                        <p>Lugar: <span>Lorem Ipsum dolor</span></p>
+                    </div>
+                </div> -->
+            </div>
+        </div>
+    </section>
+
+    <section class="results">
+        <div class="results__container">
+            <h2 class="results__title">Resultados</h2>
+            <div class="results__table">
+                {% for versus in partidos %}
+                {% if versus.estado=="culminado" and versus.golLocal !=None %}
+                <div class="results__result">
+                    <div class="results__info">
+                        <div class="results__date">
+                            <p>Fecha: <span>{{ versus.fecha_hora.strftime('%B %d %Y') }}</span></p>
+                        </div>
+                        <div class="results__place">
+                            <p>Lugar: <span>{{ versus.lugar }}</span></p>
+                        </div>
+                    </div>
+                    <div class="results__teams">
+                        <div class="results__teamA">
+                            <p>{{ versus.Local.teamName }}</p>
+                            <img src="{{ url_for('fixture.get_file', filename=versus.Local.logo ) }}" alt="">
+                        </div>
+                        <div class="results__score">
+                            <span>{{ versus.golLocal }}-{{ versus.golVisita }}</span>
+                        </div>
+                        <div class="results__teamB">
+                            <img src="{{ url_for('fixture.get_file', filename=versus.Visita.logo ) }}" alt="">
+                            <p>{{ versus.Visita.teamName}}</p>
+                        </div>
+                    </div>
+                </div>
+                {% endif %}
+                {% endfor %}
+                <!-- <div class="results__result">
+                    <div class="results__info">
+                        <div class="results__date">
+                            <p>Fecha: <span>dd/mm/aa</span></p>
+                        </div>
+                        <div class="results__place">
+                            <p>Lugar: <span>------</span></p>
+                        </div>
+                    </div>
+                    <div class="results__teams">
+                        <div class="results__teamA">
+                            <p>Lorem ipsum dolor sit amet consectetur</p>
+                            <img src="/src/assets/imgs/logo2.jpg" alt="">
+                        </div>
+                        <div class="results__score">
+                            <span>1-0</span>
+                        </div>
+                        <div class="results__teamB">
+                            <img src="/src/assets/imgs/logo3.jpg" alt="">
+                            <p>Lorem ipsum dolor sit amet consectetu</p>
+                        </div>
+                    </div>
+                </div> -->
+            </div>
+        </div>
+    </section>
+
+    <section class="positionsTable" id="table_id" name="table_id">
+        <div class="positionsTable__container">
+            <h2 class="positionsTable__title">Tabla de posiciones</h2>
+            <div class="positionsTable__table">
+                <table class="positionsTable__result">
+                    <!-- <caption>titulo tabla</caption> -->
+                    <!-- <colgroup span="8" class="columns"></colgroup> -->
+                    <thead>
+                        <tr class="table__title">
+                            <th>Pos</th>
+                            <th class="table__team">Equipo</th>
+                            <th>PJ</th>
+                            <th>PG</th>
+                            <th>PE</th>
+                            <th>PP</th>
+                            <th>DG</th>
+                            <th>PTS</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for posicion in tabla %}
+                        <tr class="table__content">
+                            <td>{{loop.index}}</td>
+                            <td>{{ posicion.teamName }}</td>
+                            <td>{{ posicion.p_jugados }}</td>
+                            <td>{{ posicion.p_ganado }}</td>
+                            <td>{{ posicion.p_empatado }}</td>
+                            <td>{{ posicion.p_perdido}}</td>
+                            <td>{{ posicion.df }}</td>
+                            <td>{{ posicion.puntos }}</td>
+                        </tr>
+                        {% endfor %}
+                        <!-- <tr class="table__content">
+                            <td>2</td>
+                            <td>Equipo 2</td>
+                            <td>12</td>
+                            <td>04</td>
+                            <td>07</td>
+                            <td>01</td>
+                            <td>12</td>
+                            <td>25</td>
+                        </tr> -->
+                    </tbody>
+                    
+                </table>
+            </div>
+        </div>
+    </section>
+</main>
+{% endblock %}
+    
+
+{% block script %}
+
+{% endblock %}

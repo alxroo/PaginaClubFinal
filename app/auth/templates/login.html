@@ -1,0 +1,30 @@
+{% extends './base.html' %}
+
+{% block main %}
+<main>
+    <section class="login formulario">
+        <div class="formulario__container login__container">
+            <h2 class="formulario__title">Iniciar Sesion</h2>
+
+            {% from "_macros.html" import render_fieldError %}
+            <form class="formulario__inputs" method="POST" novalidate>
+                {{ form.hidden_tag() }}
+
+                {{ form.email(placeholder='Email', class='input') }}
+                {{ render_fieldError(form.email) }}
+
+                {{ form.password(placeholder='Password', class='input') }}
+                {{ render_fieldError(form.password) }}
+
+                {{ form.submit(class="btn3 form__btn")|safe }}
+            </form>
+        </div>
+    </section>
+    
+</main>
+{% endblock %}
+    
+
+{% block script %}
+    
+{% endblock %}

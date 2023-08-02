@@ -1,0 +1,36 @@
+{% extends './base.html' %}
+{% import "_macros.html" as macros %}
+
+{% block main %}
+<main>
+    <section class="noticesPage">
+        <div class="noticesPage__container">
+
+            <article class="noticesPage__article">
+                <h2 class="article__title">{{ blog.title }}</h2>
+                <div class="article__date"><span>Fecha de publicacion: </span>{{ blog.timestamp.strftime('%B %d %Y') }}</div>
+                <div class="article__content">
+                    <picture class="article__img">
+                        {% if blog.img_blog%}
+                        <img src="{{ url_for('blog.get_imgBlog', filename=blog.img_blog )}}" alt="">
+                        {% else %}
+                        <img src="" alt="">
+                        {% endif %}
+                        
+                    </picture>
+                    <div class="article__textss">
+                        <p class="article__text">{{ blog.body }}</p>
+                    </div>
+                </div>
+            </article>
+        </div>
+        
+    </section>
+
+</main>
+{% endblock %}
+    
+
+{% block script %}
+    
+{% endblock %}

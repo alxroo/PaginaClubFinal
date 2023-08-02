@@ -1,0 +1,40 @@
+{% extends './base2.html' %}
+
+{% block main2 %}
+<main class="dashboard__main dashprofile">
+    <!-- <h1>Perfil</h1> -->
+    <div class="dashprofile__container">
+        <div class="dashprofile__avatar">
+            {% if usuario.img %}
+            <img src="{{ url_for('profile.get_img', filename=usuario.img ) }}" alt="">
+            {% else %}
+            <img src="" alt="">
+            {%endif%}
+
+        </div>
+        <div class="dashprofile__inputs">
+            <div class="dashprofile__row">
+                <span>Usuario:</span>
+                <p>{{ usuario.username}}</p>
+            </div>
+            <div class="dashprofile__row">
+                <span>Nombre:</span>
+                <p>{{ usuario.name}}</p>
+            </div>
+            <div class="dashprofile__row">
+                <span>Email:</span>
+                <p>{{ usuario.email}}</p>
+            </div>
+            <a href="{{ url_for('profile.editProfile',id=usuario.id) }}" class="dashprofile__btn">Editar</a>
+            
+        </div>
+    </div>
+
+    
+</main>
+{% endblock %}
+    
+
+{% block script2 %}
+
+{% endblock %}

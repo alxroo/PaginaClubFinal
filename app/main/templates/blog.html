@@ -1,0 +1,70 @@
+{% extends './base.html' %}
+{% import "_macros.html" as macros %}
+
+{% block main %}
+<main>
+    <section class="blogs">
+        <div class="blogs__container">
+            {% for blog in blogs %}
+            <div class="blogs__card">
+                <picture class="blogs__img">
+                    {% if blog.img_blog %}
+                    <img src="{{ url_for('blog.get_imgBlog', filename=blog.img_blog ) }}" alt="">
+                    {% else %}
+                    <img src="" alt="">
+                    {% endif %}
+                </picture>
+                <div class="blogs__intro">
+                    <div class="card__author">
+                        <div class="card__data">
+                            <p>Fecha de Publicacion:</p>
+                            <span>{{ blog.timestamp.strftime('%B %d %Y') }}</span>
+                        </div>
+                    </div>
+                    <h3 class="card__title">{{ blog.title }}</h3>
+                    <p class="card__paragraph">{{ blog.body }}</p>
+                    <a href="{{ url_for('main.blogonly',id=blog.id)}}" class="btn1">Seguir leyendo</a>
+                    <!-- <hr class="card__line">
+                    <div class="card__statistic">
+                        <p><span>0</span> visualizaciones</p>
+                        <p><span>0</span> comentarios</p>
+                    </div> -->
+                </div>
+            </div>
+            {% endfor %}
+            <!-- <div class="blogs__card">
+                <picture class="blogs__img">
+                    <img src="/src/assets/imgs/blog2.jpg" alt="">
+                </picture>
+                <div class="blogs__intro">
+                    <div class="card__author">
+                        <img src="/src/assets/icons/person.ico" alt="">
+                        <div class="card__data">
+                            <p>Administrador</p>
+                            <span>10 julio</span>
+                        </div>
+                    </div>
+                    <h3 class="card__title">Lorem ipsum dolor sit amet, cosnectetur adipiscing elit</h3>
+                    <p class="card__paragraph">Lorem ipsum dolor sit amet consectetur adipisicing elit. Assumenda optio asperiores iste amet provident recusandae molestiae accusantium dignissimos ipsam quo atque cumque nostrum, nisi inventore iusto architecto? Quos, corrupti quaerat.</p>
+                    <hr class="card__line">
+                    <div class="card__statistic">
+                        <p><span>0</span> visualizaciones</p>
+                        <p><span>0</span> comentarios</p>
+                    </div>
+                </div>
+            </div> -->
+
+        </div>
+        <div class="pagination blogs__pagination">
+            {{ macros.pagination_widget(pagination, 'main.blog') }}
+        </div>
+    </section>
+
+</main>
+
+{% endblock %}
+    
+
+{% block script %}
+    t>
+{% endblock %}

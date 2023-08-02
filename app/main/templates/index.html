@@ -1,0 +1,257 @@
+{% extends './base.html' %}
+
+{% block main %}
+<main>
+    <section class="hero">
+        <div class="hero__slider">
+            <div class="hero__wrapper">
+                <div class="hero__btn hero__btn--left">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="m4.431 12.822 13 9A1 1 0 0 0 19 21V3a1 1 0 0 0-1.569-.823l-13 9a1.003 1.003 0 0 0 0 1.645z"></path></svg>
+                    <!-- <img src="/static/assets/icons/arrowLeft.svg" alt=""> -->
+                </div>
+                <div class="hero__img">
+                    <img src="/static/assets/imgs/imgSlider1.jpg" alt="">
+                </div>
+                <div class="hero__img">
+                    <img src="/static/assets/imgs/imgSlider2.jpg" alt="">
+                </div>
+                <div class="hero__img">
+                    <img src="/static/assets/imgs/imgSlider3.jpg" alt="">
+                </div>
+                <div class="hero__img">
+                    <img src="/static/assets/imgs/imgSlider5.jpg" alt="">
+                </div>
+                <div class="hero__img">
+                    <img src="/static/assets/imgs/imgSlider6.jpg" alt="">
+                </div>
+                <div class="hero__btn hero__btn--right">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M5.536 21.886a1.004 1.004 0 0 0 1.033-.064l13-9a1 1 0 0 0 0-1.644l-13-9A1 1 0 0 0 5 3v18a1 1 0 0 0 .536.886z"></path></svg>
+                    <!-- <img src="/static/assets/icons/arrowRight.svg" alt=""> -->
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <section class="notices">
+        <div class="notices__container">
+            <h2 class="notices__title">Ultimas Noticias</h2>
+            {% if min > 2 %}
+            <div class="notices__gallery">
+                {% for notice in notices %}
+                <div class="notices__card">
+                    {% if notice.img %}
+                    <img class="notices__img" src="{{ url_for('notices.get_img', filename=notice.img) }}" alt="">
+                    {% else %}
+                    <img class="notices__img" src="" alt="">
+                    {% endif %}
+                    <h3 class="notices__resume">{{ notice.title }}
+                    </h3>
+                </div>
+                {% endfor%}
+            </div>
+            {% else %}
+            <div class="notices__gallery notices__gallery--min">
+                {% for notice in notices %}
+                <div class="notices__card">
+                    {% if notice.img %}
+                    <img class="notices__img" src="{{ url_for('notices.get_img', filename=notice.img) }}" alt="">
+                    {% else %}
+                    <img class="notices__img" src="" alt="">
+                    {% endif %}
+                    <h3 class="notices__resume">{{ notice.title }}
+                    </h3>
+                </div>
+                {% endfor%}
+            </div>
+            {% endif %}
+            <div class="notices__btn">
+                <a class="btn2" href="{{ url_for('main.noticias') }}">Ver mas noticias</a>
+            </div>
+        </div> 
+    </section>
+
+    <section class="fixture">
+        <div class="fixture__container">
+            <h2 class="fixture__title">Fixture y Resultados</h2>
+            <div class="fixture__tables">
+                <article class="fixture__next">
+                    <h3 class="fixture__titleNext">Proximo Partido</h3>
+                    <div class="fixture__card">
+                        {% if proxPartido.estado=="pendiente" %}
+                        <div class="fixture__date">
+                            <div class="fixture__day">Fecha:{{ proxPartido.fecha_hora }}</div>
+                            <div class="fixture__hour">Hora: Lorem</div>
+                        </div>
+                        <div class="fixture__vs">
+                            <div class="fixture__team">
+                                <img class="logo" src="{{ url_for('fixture.get_file', filename=proxPartido.Local.logo ) }}" alt="">
+                                <span class="clubname">{{ proxPartido.Local.teamName }}</span>
+                            </div>
+                            <div class="fixture__letters">VS</div>
+                            <div class="fixture__team">
+                                <img class="logo" src="{{ url_for('fixture.get_file', filename=proxPartido.Visita.logo ) }}" alt="">
+                                <span class="clubname">{{ proxPartido.Visita.teamName }}</span>
+                            </div>
+                        </div>
+                        <div class="fixture__place">Lugar: {{ proxPartido.lugar }}</div>
+                        {% endif %}
+                    </div>
+                    
+                    <a href="/fixture#fixture_id" class="fixture__btnCalendar">Ver Calendario</a>
+                </article>
+
+                <article class="fixture__last">
+                    <h3 class="fixture__titleLast">Ultimos Partidos</h3>
+                    <div class="fixture__card2">
+                        {% for partido in partidos %}
+                        {% if partido and partido.golLocal !=None %}
+                        <div class="fixture__result">
+                            <div class="result__row1">
+                                <div class="result__teamA">
+                                    <img class="result__logo" src="{{ url_for('fixture.get_file', filename=partido.Local.logo ) }}" alt="">
+                                    <span class="result__team">{{ partido.Local.teamName}}</span>
+                                </div>
+                                <span class="result__score">{{ partido.golLocal }}-{{ partido.golVisita }}</span>
+                                <div class="result__teamB">
+                                    <span class="result__team">{{ partido.Visita.teamName}}</span>
+                                    <img class="result__logo" src="{{ url_for('fixture.get_file', filename=partido.Visita.logo ) }}" alt="">
+                                </div>
+                            </div>
+                            <div class="result__row2">
+                                <span class="result__date">Fecha: {{ partido.fecha_hora }}</span>
+                            </div>
+                        </div>
+                        {% endif %}
+                        {% endfor %}
+                    </div>
+                    <a href="/fixture#table_id" class="fixture__btnCalendar">Ver Tabla de Posiciones</a>
+                </article>
+            </div>
+        </div>
+        
+    </section>
+
+    <section class="academy">
+        <div class="academy__container">
+            <h2 class="academy__title">Academia</h2>
+            <div class="academy__grid">
+                <div class="academy__img">
+                    <img src="/static/assets/imgs/academy1.jpg" alt="">
+                </div>
+                <div class="academy__img">
+                    <img src="/static/assets/imgs/academy2.jpg" alt="">
+                </div>
+                <div class="academy__img">
+                    <img src="/static/assets/imgs/academy3.jpg" alt="">
+                </div>
+                <div class="academy__img">
+                    <img src="/static/assets/imgs/academy4.jpg" alt="">
+                </div>
+                <div class="academy__img">
+                    <img src="/static/assets/imgs/academy5.jpg" alt="">
+                </div>
+                <div class="academy__img">
+                    <img src="/static/assets/imgs/academy6.jpg" alt="">
+                </div>
+            </div>
+            <div class="academy__btn">
+                <a href="{{ url_for('main.academia')}}" class="btn2 ">Ver Mas</a>
+            </div>
+        </div> 
+    </section>
+    
+    <section class="awards">
+        <div class="awards__container">
+            <h2 class="awards__title">Logros</h2>
+            <div class="awards__list">
+                <div class="awards__card">
+                    <img src="/static/assets/imgs/logro1.jpg" alt="">
+                    <span>Lorem ipsum dolor sit amet, consectetur adipisicing elit</span>
+                </div>
+                <div class="awards__card">
+                    <img src="/static/assets/imgs/logro2.jpg" alt="">
+                    <span>Lorem ipsum dolor sit amet, consectetur adipisicing elit</span>
+                </div>
+                <div class="awards__card">
+                    <img src="/static/assets/imgs/logro3.jpg" alt="">
+                    <span>Lorem ipsum dolor sit amet, consectetur adipisicing elit</span>
+                </div>
+                <div class="awards__card">
+                    <img src="/static/assets/imgs/logro4.jpg" alt="">
+                    <span>Lorem ipsum dolor sit amet, consectetur adipisicing elit</span>
+                </div>
+            </div>
+        </div>        
+    </section>
+
+    <section class="store">
+        <h2 class="store__title">Tienda</h2>
+        <div class="store__container">
+            <div class="store__img"><img src="/static/assets/imgs/store1.jpg" alt=""></div>
+            <div class="store__img"><img src="/static/assets/imgs/store2.jpg" alt=""></div>
+            <div class="store__img"><img src="/static/assets/imgs/store3.jpg" alt=""></div>
+            <div class="store__img"><img src="/static/assets/imgs/store4.jpg" alt=""></div>
+            <div class="store__img"><img src="/static/assets/imgs/store5.jpg" alt=""></div>
+        </div>
+        <div class="store__btn">
+            <button class="btn2">Ver mas</button>
+        </div>
+    </section>
+
+    <section class="blog">
+        <div class="blog__container">
+            <h2 class="blog__title">Blog</h2>
+            <div class="blog__articles">
+                {% for blog in blogs %}
+                <div class="blog__card">
+                    <div class="blog__picture">
+                        {% if blog.img_blog %}
+                        <img src="{{ url_for('blog.get_imgBlog', filename=blog.img_blog ) }}" alt="">
+                    {% else %}
+                        <img src="" alt="">
+                    {% endif%}
+                    </div>
+                    <div class="blog__description">
+                        <h4 class="description__title">{{ blog.title }}</h4>
+                        <!-- <p class="description__resume">{{ blog.body }}</p> -->
+                    </div>
+                </div>
+                {% endfor %}
+
+            </div>
+            <div class=" blog__btn">
+                <a href="{{ url_for('main.blog') }}" class="btn2">Ver mas</a>
+            </div>
+            
+
+        </div>
+
+    </section>
+
+    <section class="brands">
+        <h2 class="brands__title">Marcas-Auspiciadores</h2>
+        <div class="brands__container">
+            <div class="brands__card">
+                <img src="/static/assets/imgs/brand1.png" alt="">
+            </div>
+            <div class="brands__card">
+                <img src="/static/assets/imgs/brand1.png" alt="">
+            </div>
+            <div class="brands__card">
+                <img src="/static/assets/imgs/brand1.png" alt="">
+            </div>
+            <div class="brands__card">
+                <img src="/static/assets/imgs/brand1.png" alt="">
+            </div>
+        </div>
+    </section>
+</main>
+{% endblock %}
+    
+
+{% block script %}
+    <script src="/static/js/sliderHome.js"></script>
+{% endblock %}
+
+
+
